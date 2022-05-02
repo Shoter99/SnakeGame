@@ -11,6 +11,7 @@
     <div class="container-wrapper">
         <div class="container">
             <div class="title">Snake Game</div>
+            <h3 class="highscore"></h3>
             <form action="game.html" class="menu">
                 <input type="submit" class="play-btn" value="Play">
                 <div class="difficulty">
@@ -30,5 +31,11 @@
             </form>
         </div>
     </div>
+    <script>
+        let hsElement = document.querySelector(".highscore")
+        let highscoreFromStorage = localStorage.getItem("highscore")
+        hsElement.innerHTML = `Highscore: ${highscoreFromStorage ? highscoreFromStorage : "NaN"}`
+        
+    </script>
 </body>
 </html>

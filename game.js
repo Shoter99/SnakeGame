@@ -1,5 +1,5 @@
 import {SNAKE_SPEED, draw as drawSnake, update as updateSnake, getSnakeHead, snakeIntersects, getSnakeLength, setSnakeSpeed } from './snake.js'
-import {draw as drawFood, setExpansionRate, update as updateFood } from './food.js'
+import {EXPANSION_RATE, draw as drawFood, setExpansionRate, update as updateFood } from './food.js'
 import { outsideGrid } from './grid.js'
 
 let lastRenderTime = 0
@@ -19,11 +19,11 @@ function setDifficulty(difficulty){
             break
         case 'Medium':
             setExpansionRate(2)
-            setSnakeSpeed(5)
+            setSnakeSpeed(7)
             break
         case 'Hard':
             setExpansionRate(3)
-            setSnakeSpeed(6)
+            setSnakeSpeed(10)
             break
         default:
             setExpansionRate(1)
@@ -34,8 +34,12 @@ function setDifficulty(difficulty){
 
 function main(timeStamp){
     if(gameOver){ 
+        saveHighscore()
         window.location.href = './index.html'
-        return alert("You lose!"); 
+        return alert(
+            `You lose!\nYour score: ${score.innerHTML}\nHighscore: ${localStorage.getItem('highscore') ? localStorage.getItem('highscore') : "NaN"}`
+            ); 
+
     }
 
 
@@ -68,5 +72,13 @@ function checkDeath(){
     gameOver = outsideGrid(getSnakeHead()) || snakeIntersects()
 }
 function updateScore(){
-    score.innerHTML = getSnakeLength()-1
+    score.innerHTML = Math.ceil((getSnakeLength()/EXPANSION_RATE)-1)
+}
+function saveHighscore(){ 
+    if(localStorage.getItem('highscore') === null){ 
+        return localStorage.setItem('highscore', score.innerHTML)
+    }
+    if(parseInt(localStorage.getItem('highscore')) < parseInt(score.innerHTML)){
+        localStorage.setItem('highscore', score.innerHTML)
+    }
 }
