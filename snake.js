@@ -1,6 +1,6 @@
 import { getInputDir } from "./input.js"
 
-export const SNAKE_SPEED = 4
+export let SNAKE_SPEED = 4
 const snakeBody = [
     {x:11, y:11},
 ]
@@ -54,4 +54,7 @@ export function snakeIntersects(){
 }
 export function getSnakeLength(){ 
     return snakeBody.length
+}
+export function setSnakeSpeed(speed){
+    SNAKE_SPEED = speed 
 }
